@@ -74,8 +74,3 @@
     state: started
     enabled: yes
   when: php_enable_php_fpm
-
-- name: Set php ini fpm file path
-  environment:
-    PHPRC: "{{ php_cli_fpm_ini_path }}"
-  when: php_cli_fpm_ini_enable
