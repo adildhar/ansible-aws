@@ -40,7 +40,7 @@
       with_items: '{{ec2.instances}}'
 
 - name: Configure instance(s)
-  hosts: launched
+  hosts: webservers
   become: True
   gather_facts: True
   roles:  
