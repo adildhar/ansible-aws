@@ -1,6 +1,6 @@
 ---
 - name: Create webservers with Nginx, PHP, Composer and Symfony
-  hosts: webservers
+  hosts: localhost
   connection: local
   gather_facts: False
   tasks:
@@ -37,9 +37,13 @@
 
     - name: Add all instance public IPs to host group
       add_host: hostname={{ item.public_ip }} groups=webservers
-      with_items: ec2.instances
-  
-  roles: 
-      - webserver
+      with_items: '{{ec2.instances}}'
+
+    - name: Configure instance(s)
+      hosts: launched
+      become: True
+      gather_facts: True
+      roles:  
+        - webserver
 
 
