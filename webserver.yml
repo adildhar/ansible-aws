@@ -3,6 +3,8 @@
   hosts: localhost
   connection: local
   gather_facts: False
+  vars_files:
+    - webserver/vars/main.yml
   tasks:
     - name: Provision a set of ec2 instances for nginx-web
       ec2:
