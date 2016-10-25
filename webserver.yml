@@ -13,7 +13,7 @@
         image: "{{ web_ami_id }}"
         group_id: "{{ web_group_id}}"
         vpc_subnet_id: "{{ web_subnet_ida }}"
-        region: "{{ web_region }]"
+        region: "{{ web_region }}"
         wait: true
         exact_count: 1
         count_tag:
