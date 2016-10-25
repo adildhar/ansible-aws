@@ -1,12 +1,9 @@
 ---
 - name: Clone git repository
-  git: >
-    dest={{ web_dir }}
-    repo=https://github.com/adildhar/symfony.git
-    update=no
-    become: yes
-    become_user: www-data
-    register: cloned
+  git: dest={{ web_dir }} repo=https://github.com/adildhar/symfony.git update=no
+  become: yes
+  become_user: www-data
+  register: cloned
 
 - name: install composer
   shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
