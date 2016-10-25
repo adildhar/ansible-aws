@@ -1,0 +1,20 @@
+---
+- name: Clone git repository
+  git: >
+    dest={{ web_dir }}
+    repo=https://github.com/adildhar/symfony.git
+    update=no
+    become: yes
+    become_user: www-data
+    register: cloned
+
+- name: install composer
+  shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+  args:
+    creates: /usr/local/bin/composer
+
+- name: composer create-project
+  composer: command=create-project working_dir={{ web_dir }} optimize_autoloader=no
+  become: yes
+  become_user: www-data
+  when: cloned|changed
