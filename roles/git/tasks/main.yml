@@ -1,0 +1,5 @@
+---
+- name: Install Git
+  become: yes
+  become_user: root
+  apt:  pkg=git state=latest
