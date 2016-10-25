@@ -7,7 +7,6 @@
     - name: Provision a set of ec2 instances for nginx-web
       ec2:
         key_name: "{{ web_key_name}}"
-        group: webservers
         instance_type: "{{ web_ins_type }}"
         image: "{{ web_ami_id }}"
         group_id: "{{ web_group_id}}"
@@ -23,7 +22,6 @@
     - name: Provision a set of ec2 instances for nginx-web
       ec2:
         key_name: "{{ web_key_name}}"
-        group: webservers
         instance_type: "{{ web_ins_type }}"
         image: "{{ web_ami_id }}"
         group_id: "{{ web_group_id}}"
