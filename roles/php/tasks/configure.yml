@@ -27,5 +27,5 @@
 
 - name: Set php ini fpm file path for php-cli
   environment:
-    PHPRC: "{{ php_cli_fpm_ini_path }}"
+    "{{ PHPRC }}"
   when: php_cli_fpm_ini_enable
