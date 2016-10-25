@@ -1,0 +1,8 @@
+---
+dependencies:
+    - {role: init }
+    #- {role: php }
+    #- {role: git }
+    #- {role: nginx }
+    #- {role: composer }
+    #- {role: symfony }

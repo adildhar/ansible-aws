@@ -1,0 +1,17 @@
+---
+root_group: root
+nginx_conf_path: /etc/nginx/conf.d
+nginx_conf_file_path: /etc/nginx/nginx.conf
+nginx_mime_file_path: /etc/nginx/mime.types
+nginx_pidfile: /run/nginx.pid
+nginx_vhost_path: /etc/nginx/sites-enabled
+nginx_default_vhost_path: /etc/nginx/sites-enabled/default
+__nginx_user: "vagrant"          #"www-data"
+remote_www_dir: "/usr/share/nginx/html" #/var/www/symfony
+nginx_vhost_projectname: "newweb"
+nginx_vhost_projectwebroot: "/usr/share/nginx/html/newweb/web"
+nginx_vhost_servername: "localhost"
+nginx_fastcgi_ipport: "127.0.0.1:9000"
+nginx_fastcgi_index: "index.php"
+nginx_vhost_location: '~ [^/]\.php(/|$)'
+

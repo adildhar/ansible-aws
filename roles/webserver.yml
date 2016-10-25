@@ -1,0 +1,48 @@
+---
+- name: Create webservers with Nginx, PHP, Composer and Symfony
+  hosts: localhost
+  connection: local
+  gather_facts: False
+
+  tasks:
+    - name: Provision a set of ec2 instances for nginx-web
+      ec2:
+         key_name: "{{ web_key_name}}"
+         group: webservers
+         instance_type: "{{ web_ins_type }}"
+         image: "{{ web_ami_id }}"
+         group_id: "{{ web_group_id}}"
+         vpc_subnet_ida: "{{ web_subnet_id }}"
+         region: "{{ web_region }]"
+         wait: true
+         exact_count: 1
+         count_tag:
+            Name: webserver1
+         instance_tags:
+            Name: webserver
+      register: ec2
+    - name: Provision a set of ec2 instances for nginx-web
+      ec2:
+         key_name: "{{ web_key_name}}"
+         group: webservers
+         instance_type: "{{ web_ins_type }}"
+         image: "{{ web_ami_id }}"
+         group_id: "{{ web_group_id}}"
+         vpc_subnet_idb: "{{ web_subnet_id }}"
+         region: "{{ web_region }]"
+         wait: true
+         exact_count: 1
+         count_tag:
+            Name: webserver2
+         instance_tags:
+            Name: webserver
+      register: ec2
+
+    - name: Add all instance public IPs to host group
+      add_host: hostname={{ item.public_ip }} groups=webservers
+      with_items: ec2.instances
+  
+  roles: 
+      - webserver
+
+

@@ -1,0 +1,24 @@
+---
+  - name: Update apt
+    become: yes
+    become_user: root
+    apt:  update_cache=yes
+    
+  - name: Install system packages
+    become: yes
+    become_user: root
+    apt:  pkg={{ item }} state=latest
+    with_items:
+      - curl
+      - wget
+      - build-essential
+      - python-software-properties
+      - zip
+      - unzip
+      - htop
+
+  - name: Install extra packages
+    become: yes
+    become_user: root
+    apt:  pkg={{ item }} state=latest
+    with_items: "{{ sys_packages }}"
