@@ -1,0 +1,58 @@
+---
+- name: WebServer | Create the WebServer Instance(s)
+  local_action:
+    module: ec2
+    region: "{{ web_region }}"
+    group_id: "{{ web_group_id}}"
+    keypair: "{{ web_key_name }}"
+    instance_type: "{{ web_ins_type }}"
+    image: "{{ web_ami_id }}"
+    vpc_subnet_id: "{{ item }}"
+    assign_public_ip: False
+    wait: True
+    wait_timeout: 600
+    instance_tags:
+      Name: "{{ web_application }}_WEB_Instance"
+      Environment: "{{ ENV }}"
+      Role: "{{ web_server_role }}"
+      Application: "{{ web_application }}"
+  register: web
+  with_items:
+    - "{{ web_subnet_ida }}"
+    - "{{ web_subnet_idb }}" 
+
+ - name: WebServer | Set the Instances facts
+   set_fact:
+     instance_private_ip_1: "{{ web.results[0].instances[0].private_ip }}"
+     instance_id_1: "{{ web.results[0].instances[0].id }}"
+     instance_private_ip_2: "{{ web.results[1].instances[0].private_ip }}"
+     instance_id_2: "{{ web.results[1].instances[0].id }}"
+
+ - name: WebServer | Add the newly created EC2 instance(s) to the local host group (located inside the directory)
+   local_action: 
+     module: lineinfile 
+     dest: "{{ inventory_hosts }}" 
+     regexp: "{{ item }}" 
+     insertafter: "[webserver]" 
+     line: "{{ item }}"
+   with_items:
+      - "{{ instance_private_ip_1 }}"
+      - "{{ instance_private_ip_2 }}" 
+
+ - name: WebServer | Wait for SSH to come up
+   local_action: 
+     module: wait_for 
+     host: "{{ item }}" 
+     port: 22 
+     state: started
+   with_items: 
+     - "{{ instance_private_ip_1 }}"
+     - "{{ instance_private_ip_1 }}" 
+
+ - name: Create SSH Group to login dynamically to EC2 Instance(s)
+   add_host: 
+     hostname: "{{ item }}"
+     groupname: "{{ web_server_role }}"
+   with_items: 
+     - "{{ instance_private_ip_1 }}"
+     - "{{ instance_private_ip_2 }}"

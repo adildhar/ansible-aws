@@ -5,47 +5,13 @@
   gather_facts: False
   vars_files:
     - roles/webserver/vars/main.yml
-  tasks:
-    - name: Provision a set of ec2 instances for nginx-web
-      ec2:
-        key_name: "{{ web_key_name}}"
-        instance_type: "{{ web_ins_type }}"
-        image: "{{ web_ami_id }}"
-        group_id: "{{ web_group_id}}"
-        vpc_subnet_id: "{{ web_subnet_ida }}"
-        region: "{{ web_region }}"
-        wait: true
-        exact_count: 1
-        count_tag:
-          Name: webserver1
-        instance_tags:
-          Name: webserver
-      register: ec2
-    - name: Provision a set of ec2 instances for nginx-web
-      ec2:
-        key_name: "{{ web_key_name}}"
-        instance_type: "{{ web_ins_type }}"
-        image: "{{ web_ami_id }}"
-        group_id: "{{ web_group_id}}"
-        vpc_subnet_id: "{{ web_subnet_idb }}"
-        region: "{{ web_region }}"
-        wait: true
-        exact_count: 1
-        count_tag:
-          Name: webserver2
-        instance_tags:
-          Name: webserver
-      register: ec2
+  roles:
+    - aws
 
-    - name: Add all instance public IPs to host group
-      add_host: hostname={{ item.public_ip }} groups=webservers
-      with_items: '{{ec2.instances}}'
 
-- name: Configure instance(s)
-  hosts: webservers
-  become: True
+- hosts: webserver
+  become: yes 
+  remote_user: ubuntu
   gather_facts: True
-  roles:  
+  roles:
     - webserver
-
-

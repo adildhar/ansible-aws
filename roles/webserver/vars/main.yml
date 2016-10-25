@@ -9,6 +9,11 @@ web_vpc_id: vpc-cc4a81a8
 web_subnet_ida: subnet-63982015
 web_subnet_idb: subnet-272fa643
 web_region: ap-southeast-1
+ENV: testing
+web_application: nginx-symfony
+web_server_role: webserver
+server_hosts: webserver
+inventory_hosts: "/etc/ansible/inventory/hosts"
 sys_packages:
   - mcrypt
   - vim
