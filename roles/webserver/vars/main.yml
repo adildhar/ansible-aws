@@ -2,7 +2,7 @@
 web_ami_id: ami-21d30f42
 web_ins_type: t2.micro
 web_key_name: tradetracker-keypair
-web_group_id: sg-3e2d315a, sg-362f3352
+web_group_id: sg-362f3352
 web_vpc_id: vpc-cc4a81a8
 web_subnet_ida: subnet-63982015
 web_subnet_idb: subnet-272fa643
