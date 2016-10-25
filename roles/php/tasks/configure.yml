@@ -21,9 +21,3 @@
   with_items: "{{ php_conf_paths }}"
   notify: restart webserver
   when: php_use_managed_ini
-
-- name: Set  path for php-cli
-  command: "{{ php_cli_enable }}"
-
-- name: set phprc path 
-  command: "alias PHPRC = {{ php_cli_fpm_ini_path }}"
