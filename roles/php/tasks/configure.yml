@@ -25,5 +25,4 @@
 - name: Set  path for php-cli
   command: "{{ php_cli_enable }}"
 
-- name: Set php ini fpm file path for php-cli
-  environment: "{{ PHPRC }}"
+- environment: "{{ PHPRC }}"
