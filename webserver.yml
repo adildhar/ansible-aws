@@ -1,6 +1,6 @@
 ---
 - name: Create webservers with Nginx, PHP, Composer and Symfony
-  hosts: localhost
+  hosts: webservers
   connection: local
   gather_facts: False
   tasks:
