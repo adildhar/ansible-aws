@@ -10,7 +10,7 @@
     vpc_subnet_id: "{{ item }}"
     assign_public_ip: False
     wait: True
-    wait_timeout: 800
+    wait_timeout: 900
     instance_tags:
       Name: "{{ web_application }}_WEB_Instance"
       Environment: "{{ ENV }}"

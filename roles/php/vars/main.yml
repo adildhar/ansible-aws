@@ -1,13 +1,37 @@
 ---
-php_packages:
-  - php5-common
-  - php5-cli
-  - php5-dev
-  - php5-fpm
+__php_packages:
+  - php{{ php_version_enable }}-common
+  - php{{ php_version_enable }}-cli
+  - php{{ php_version_enable }}-dev
+  - php{{ php_version_enable }}-fpm
   - libpcre3-dev
-  - php5-gd
-  - php5-curl
-  - php5-imap
-  - php5-json
-  - php5-pgsql
-  - php5-mongo
+  - php{{ php_version_enable }}-gd
+  - php{{ php_version_enable }}-curl
+  - php{{ php_version_enable }}-imap
+  - php{{ php_version_enable }}-json
+  - php{{ php_version_enable }}-opcache
+  - php{{ php_version_enable }}-xml
+  - php{{ php_version_enable }}-mbstring
+  - php-apcu
+  - php{{ php_version_enable }}-pgsql
+  - php-memcached
+  
+__php_webserver_daemon: "nginx"
+
+# ubuntu configuration paths
+__php_conf_paths:
+  - /etc/php/{{ php_version_enable }}/fpm
+  - /etc/php/{{ php_version_enable }}/cli
+  - /etc/php/{{ php_version_enable }}/nginx
+
+__php_extension_conf_paths:
+  - /etc/php/{{ php_version_enable }}/fpm/conf.d
+  - /etc/php/{{ php_version_enable }}/cli/conf.d
+  - /etc/php/{{ php_version_enable }}/nginx/conf.d
+
+__php_fpm_daemon: php{{ php_version_enable }}-fpm
+__php_fpm_conf_path: "/etc/php/{{ php_version_enable }}/fpm"
+__php_fpm_pool_conf_path: "{{ __php_fpm_conf_path }}/pool.d/www.conf"
+
+__php_fpm_pool_user: www-data
+__php_fpm_pool_group: www-data

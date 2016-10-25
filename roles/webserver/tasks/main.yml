@@ -10,8 +10,3 @@
   args:
     creates: /usr/local/bin/composer
 
-- name: composer create-project
-  composer: command=create-project working_dir={{ web_dir }} optimize_autoloader=no
-  become: yes
-  become_user: www-data
-  when: cloned|changed

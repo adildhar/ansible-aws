@@ -1,19 +1,40 @@
 ---
+- name: Add PPA for php-{{ php_version_enable }}
+  become: yes
+  become_user: root
+  apt_repository:
+    repo: "ppa:ondrej/php"
+    state: present
+    update_cache: yes
+  register: php_ppa_added
+
+- name: Define php_packages.
+  set_fact:
+    php_packages: "{{ __php_packages | list }}"
+  when: php_packages is not defined
+
 - name: Install PHP packages
   become: yes
   become_user: root
-  apt:  package="{{ php_packages | list  }}" update_cache=yes state=latest
-  with_items: "{{ php_packages  }}"
+  apt:  package="{{  __php_packages | list  }}" state=latest
+  with_items: "{{ __php_packages  }}"
 
-- name: ensure php5-fpm cgi.fix_pathinfo=0
-  lineinfile: dest=/etc/php5/fpm/php.ini regexp='^(.*)cgi.fix_pathinfo=' line=cgi.fix_pathinfo=0
-  notify:
-    - restart php5-fpm
-    - restart nginx
+- name: Define php_conf_paths.
+  set_fact:
+    php_conf_paths: "{{ __php_conf_paths }}"
+  when: php_conf_paths is not defined
 
-- name: enable php5 mcrypt module
-  shell: php5enmod mcrypt
-  args:
-    creates: /etc/php5/cli/conf.d/20-mcrypt.ini
+- name: Define php_extension_conf_paths.
+  set_fact:
+    php_extension_conf_paths: "{{ __php_extension_conf_paths }}"
+  when: php_extension_conf_paths is not defined
+
+- name: Define php_fpm_conf_path.
+  set_fact:
+    php_fpm_conf_path: "{{ __php_fpm_conf_path }}"
+  when: php_fpm_conf_path is not defined
 
 
+# Configure PHP.
+- include: configure.yml
+- include: configure-fpm.yml
