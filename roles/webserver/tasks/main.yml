@@ -10,3 +10,13 @@
   args:
     creates: /usr/local/bin/composer
 
+- name: ELB | Adding EC2 instance(s) to the ELB provided
+  local_action:
+    module: ec2_elb
+    region: "{{ web_region }}"
+    ec2_elbs: "{{ load_balancer_name }}"
+    instance_id: "{{ item }}"
+    state: present
+  with_items: 
+    - "{{ instance_id_1 }}"
+    - "{{ instance_id_2 }}"
