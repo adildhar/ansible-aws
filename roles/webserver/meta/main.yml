@@ -4,3 +4,4 @@ dependencies:
     - {role: git }
     - {role: nginx }
     - {role: php }
+    - {role: symfony}
