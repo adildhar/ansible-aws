@@ -1,0 +1,16 @@
+---
+- name: Create webservers with Nginx, PHP, Composer and Symfony
+  hosts: localhost
+  connection: local
+  gather_facts: False
+  vars_files:
+    - roles/mongo/vars/main.yml
+  roles:
+    - aws
+
+- hosts: mongo
+  become: yes 
+  remote_user: ubuntu
+  gather_facts: True
+  roles:
+    - mongo

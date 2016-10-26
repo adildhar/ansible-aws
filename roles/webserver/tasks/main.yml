@@ -4,6 +4,15 @@
   become: yes
   register: cloned
 
+- name: Apply permissions to webroot
+  become: yes
+  become_user: root
+  file: path="{{ webroot }}" state=directory mode=0755
+  recurse: yes
+  owner: "{{web_dir_user}}"
+  group: "{{web_dir_user}}"
+  when: cloned|changed
+
 - name: install composer
   shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
   become: yes
@@ -16,3 +25,5 @@
 - name: run composer for dependencies
   command: /usr/bin/php5.6 /usr/local/bin/composer install -d {{ web_dir }}
   ignore_errors: yes
+
+

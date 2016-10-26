@@ -16,20 +16,26 @@ server {
 
     index {{ vhost.index | default('index.html index.htm') }};
 
-{% if nginx_fastcgi_ipport is defined %}
-  location  {{ nginx_vhost_location }}  {
-  fastcgi_split_path_info ^(.+\.php)(/.*)$;
-  if (!-f $document_root$fastcgi_script_name) {
-    return 404;
-  }
-  # Mitigate https://httpoxy.org/ vulnerabilities
-  fastcgi_param HTTP_PROXY "";
-  fastcgi_pass {{ nginx_fastcgi_ipport }};
-  fastcgi_index {{ nginx_fastcgi_index}};
-  include fastcgi_params;
-  }
-{% endif %}
+location / {
+        # try to serve file directly, fallback to app.php
+        try_files $uri /app.php$is_args$args;
+        }
 
+location ~ ^/(app_dev|config)\.php(/|$) {
+        fastcgi_pass {{ nginx_fastcgi_ipport }};
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_param DOCUMENT_ROOT $realpath_root;
+        }
+
+location ~ ^/app\.php(/|$) {
+        fastcgi_pass { nginx_fastcgi_ipport }};
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+       fastcgi_param DOCUMENT_ROOT $realpath_root;
+      }
 
 {% if vhost.error_page is defined %}
     error_page {{ vhost.error_page }};
