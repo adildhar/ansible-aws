@@ -37,7 +37,7 @@
 - name: install php mongodb driver
   become: yes
   become_user: root
-  pear: name=mongodb state=present
+  pear: name=pecl/mongodb state=present
 
 # Configure PHP.
 - include: configure.yml
