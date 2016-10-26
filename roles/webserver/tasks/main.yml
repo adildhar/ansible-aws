@@ -13,7 +13,7 @@
 - ec2_remote_facts:
     filters:
       instance-state-name: running
-      "tag:Name": {{ web_application }}_WEB_Instance
+      "tag:Name": "{{ web_application }}_WEB_Instance"
       "vpc-id": "{{ web_vpc_id }}"
 
 - name: ELB | Adding EC2 instance(s) to the ELB provided
