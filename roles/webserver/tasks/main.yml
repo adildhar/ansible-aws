@@ -24,6 +24,7 @@
     ec2_elbs: "{{ load_balancer_name }}"
     instance_id: "{{ item }}"
     state: present
+    wait: no
   with_items: 
     - "{{ instance_id_1 }}"
     - "{{ instance_id_2 }}"
