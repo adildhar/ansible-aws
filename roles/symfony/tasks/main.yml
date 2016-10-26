@@ -17,7 +17,7 @@
 - name: Make Symfony executable
   become: yes
   become_user: root
-  file: path="{{ symfony_path }}" state=touch mode="u+rwx,a-rx"
+  file: path="{{ symfony_path }}" state=file mode="u+rwx,a-rx"
   when: symfony_bin.stat.exists
 
 - name: Add symfony_home_path bin directory to global $PATH.
