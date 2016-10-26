@@ -19,7 +19,7 @@ php_version_enable: "5.6"
 php_cli_enable: "/usr/bin/php{{ php_version_enable }} -c /etc/php/{{ php_version_enable }}/fpm/php.ini"
 php_cli_fpm_ini_enable: true
 php_cli_fpm_ini_path: "/etc/php/{{ php_version_enable }}/fpm/php.ini"
-
+load_balancer_name: {{ testing-webserver-ELB }}
 sys_packages:
   - mcrypt
   - vim
