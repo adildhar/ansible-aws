@@ -1,6 +1,6 @@
 ---
 - name: Clone git repository
-  git: dest={{ web_dir }} repo=https://github.com/adildhar/symfony.git update=no
+  git: dest={{ webroot }} repo=https://github.com/adildhar/symfony.git update=no
   become: yes
   register: cloned
 
@@ -11,7 +11,7 @@
     creates: /usr/local/bin/composer
 
 - name: copy local parameters file
-  copy: src=parameters.yml dest=/var/www/symfony/app/config
+  copy: src=parameters.yml dest={{ web_dir }}/app/config
 
 - name: run composer for dependencies
   command: /usr/bin/php5.6 /usr/local/bin/composer install
