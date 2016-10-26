@@ -30,8 +30,7 @@
 
 - name: waiting for server to come up
   local_action: wait_for host={{ item }} state=started delay=30 timeout=300
-  sudo: false
-with_items: 
+  with_items: 
     - "{{ instance_private_ip_1 }}"
     - "{{ instance_private_ip_2 }}"
 
