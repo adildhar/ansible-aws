@@ -1,0 +1,3 @@
+---
+# LB configuration
+load_balancer_name: "testing-webserver-ELB"
