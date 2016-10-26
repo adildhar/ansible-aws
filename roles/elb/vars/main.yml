@@ -1,3 +1,4 @@
 ---
 # LB configuration
 load_balancer_name: "testing-webserver-ELB"
+elb_web_region: ap-southeast-1

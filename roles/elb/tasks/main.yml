@@ -9,7 +9,7 @@
 - name: ELB | Adding EC2 instance(s) to the ELB provided
   local_action:
     module: ec2_elb
-    region: "{{ web_region }}"
+    region: "{{ elb_web_region }}"
     ec2_elbs: "{{ load_balancer_name }}"
     instance_id: "{{ item }}"
     state: present
