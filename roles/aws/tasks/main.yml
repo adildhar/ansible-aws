@@ -53,3 +53,14 @@
   with_items: 
     - "{{ instance_private_ip_1 }}"
     - "{{ instance_private_ip_2 }}"
+
+- name: ELB | Adding EC2 instance(s) to the ELB
+   local_action:
+     module: ec2_elb
+     region: "{{ web_region }}"
+     ec2_elbs: "{{ load_balancer_name }}"
+     instance_id: "{{ item }}"
+     state: present
+   with_items: 
+     - "{{ instance_id_1 }}"
+     - "{{ instance_id_2 }}"

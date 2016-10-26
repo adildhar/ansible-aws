@@ -33,6 +33,7 @@ __php_extension_conf_paths:
   - /etc/php/{{ php_version_enable }}/cli/conf.d
   - /etc/php/{{ php_version_enable }}/nginx/conf.d
 
+
 __php_fpm_daemon: php{{ php_version_enable }}-fpm
 __php_fpm_conf_path: "/etc/php/{{ php_version_enable }}/fpm"
 __php_fpm_pool_conf_path: "{{ __php_fpm_conf_path }}/pool.d/www.conf"

@@ -35,6 +35,8 @@
   when: php_fpm_conf_path is not defined
 
 - name: install php mongodb driver
+  become: yes
+  become_user: root
   pear: name=mongodb state=present
 
 # Configure PHP.

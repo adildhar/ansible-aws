@@ -21,3 +21,11 @@
   with_items: "{{ php_conf_paths }}"
   notify: restart webserver
   when: php_use_managed_ini
+
+- name: enable mongodb driver module.
+  template:
+    src: mongodb.ini.j2
+    dest: "/etc/php/{{ php_version_enable }}/mods-available/mongodb.ini"
+    owner: root
+    group: root
+    mode: 0644
