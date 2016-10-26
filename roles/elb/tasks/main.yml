@@ -1,0 +1,19 @@
+---
+- name: Gathering ec2 facts
+  local_action: ec2_facts
+
+- set_fact:
+  instance_id_1: "{{ansible_ec2_instance_id}}"
+  instance_id_2: "{{ansible_ec2_instance_id}}"
+
+- name: ELB | Adding EC2 instance(s) to the ELB provided
+  local_action:
+    module: ec2_elb
+    region: "{{ web_region }}"
+    ec2_elbs: "{{ load_balancer_name }}"
+    instance_id: "{{ item }}"
+    state: present
+    wait: no
+  with_items: 
+    - "{{ instance_id_1 }}"
+    - "{{ instance_id_2 }}"

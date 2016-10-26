@@ -16,7 +16,6 @@
   roles:
     - webserver
 
-
 - hosts: webserver
   become: yes 
   gather_facts: True
