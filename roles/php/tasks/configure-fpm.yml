@@ -78,3 +78,7 @@
 
 - name: configure mongodb for php-fpm
   command: "ln -sv /etc/php/{{ php_version_enable }}/mods-available/mongodb.ini {{ __php_extension_conf_paths }}/20-mongodb.ini"
+
+- name: configure mongodb
+  file: src=/etc/php/5.6/mods-available/mongodb.ini dest={{ item }}/20-mongodb.ini state=link
+  with_items: "{{ __php_extension_conf_paths }}"
