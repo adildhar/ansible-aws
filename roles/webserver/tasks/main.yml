@@ -10,6 +10,13 @@
   args:
     creates: /usr/local/bin/composer
 
+- name: copy local parameters file
+  copy: src=parameters.yml dest=/var/www/symfony/app/config
+
+- name: run composer for dependencies
+  command: /usr/bin/php5.6 /usr/local/bin/composer install
+  ignore_errors: yes
+
 - name: Gathering ec2 facts
   local_action: ec2_facts
 
