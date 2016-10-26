@@ -28,6 +28,13 @@
     instance_private_ip_2: "{{ web.results[1].instances[0].private_ip }}"
     instance_id_2: "{{ web.results[1].instances[0].id }}"
 
+- name: waiting for server to come up
+  local_action: wait_for host={{ item }} state=started delay=30 timeout=300
+  sudo: false
+with_items: 
+    - "{{ instance_private_ip_1 }}"
+    - "{{ instance_private_ip_2 }}"
+
 - name: WebServer | Add the newly created EC2 instance(s) to the local host group (located inside the directory)
   local_action: 
     module: lineinfile 

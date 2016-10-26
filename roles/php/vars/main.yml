@@ -15,6 +15,7 @@ __php_packages:
   - php-apcu
   - php{{ php_version_enable }}-pgsql
   - php-memcached
+  - php-mongo
   
 __php_webserver_daemon: "nginx"
 

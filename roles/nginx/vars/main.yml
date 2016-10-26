@@ -9,7 +9,7 @@ nginx_default_vhost_path: /etc/nginx/sites-enabled/default
 __nginx_user: "www-data"          
 remote_www_dir: "/var/www/symfony"
 nginx_vhost_projectname: "symfony"
-nginx_vhost_projectwebroot: "/usr/share/nginx/html/newweb/web"
+nginx_vhost_projectwebroot: "/var/www/symfony/web"
 nginx_vhost_servername: "localhost"
 nginx_fastcgi_ipport: "127.0.0.1:9000"
 nginx_fastcgi_index: "index.php"
