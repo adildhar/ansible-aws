@@ -16,6 +16,9 @@ __php_packages:
   - php{{ php_version_enable }}-pgsql
   - php-memcached
   - php-mongo
+  - php-xml
+  - pkg-config
+  - libssl-dev
   
 __php_webserver_daemon: "nginx"
 

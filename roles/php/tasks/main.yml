@@ -34,7 +34,10 @@
     php_fpm_conf_path: "{{ __php_fpm_conf_path }}"
   when: php_fpm_conf_path is not defined
 
+- name: install php mongodb driver
+  pear: name=mongodb state=present
 
 # Configure PHP.
 - include: configure.yml
 - include: configure-fpm.yml
+
