@@ -1,6 +1,6 @@
 ---
 - name: Clone git repository
-  git: dest={{ webroot }} repo=https://github.com/adildhar/symfony.git update=no
+  git: dest={{ web_dir }} repo=https://github.com/adildhar/symfony.git update=no
   become: yes
   register: cloned
 
@@ -14,7 +14,7 @@
   copy: src=parameters.yml dest={{ web_dir }}/app/config
 
 - name: run composer for dependencies
-  command: /usr/bin/php5.6 /usr/local/bin/composer install
+  command: /usr/bin/php5.6 /usr/local/bin/composer install -d {{ web_dir }}
   ignore_errors: yes
 
 - name: Gathering ec2 facts
