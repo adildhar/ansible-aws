@@ -8,11 +8,11 @@
   roles:
     - aws
 
-
 - hosts: webserver
   become: yes 
   remote_user: ubuntu
   gather_facts: True
   roles:
     - webserver
+    - symfony
     - elb

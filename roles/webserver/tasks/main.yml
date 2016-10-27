@@ -16,11 +16,9 @@
   args:
     creates: /usr/local/bin/composer
 
-- name: copy local parameters file
-  copy: src=parameters.yml dest={{ symfony_web_dir }}/app/config
-
 - name: run composer for dependencies
   command: /usr/bin/php5.6 /usr/local/bin/composer install -d {{ symfony_web_dir }}
   ignore_errors: yes
 
-
+- name: copy local parameters file
+  copy: src=parameters.yml dest={{ symfony_web_dir }}/app/config

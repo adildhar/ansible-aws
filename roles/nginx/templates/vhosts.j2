@@ -30,7 +30,7 @@ location ~ ^/(app_dev|config)\.php(/|$) {
         }
 
 location ~ ^/app\.php(/|$) {
-        fastcgi_pass { nginx_fastcgi_ipport }};
+        fastcgi_pass {{ nginx_fastcgi_ipport }};
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
