@@ -21,20 +21,20 @@
     - "{{ web_subnet_ida }}"
     - "{{ web_subnet_idb }}" 
 
-- name: WebServer | Set the Instances facts
+- name: AWS EC2 Server | Set the Instances facts
   set_fact:
     instance_private_ip_1: "{{ web.results[0].instances[0].private_ip }}"
     instance_id_1: "{{ web.results[0].instances[0].id }}"
     instance_private_ip_2: "{{ web.results[1].instances[0].private_ip }}"
     instance_id_2: "{{ web.results[1].instances[0].id }}"
 
-- name: waiting for server to come up
+- name: waiting for aws server(s) to come up
   local_action: wait_for host={{ item }} state=started delay=30 timeout=200
   with_items: 
     - "{{ instance_private_ip_1 }}"
     - "{{ instance_private_ip_2 }}"
 
-- name: WebServer | Add the newly created EC2 instance(s) to the local host group (located inside the directory)
+- name: AWS EC2 Server(s) | Add the newly created EC2 instance(s) to the local host group (located inside the directory)
   local_action: 
     module: lineinfile 
     dest: "{{ inventory_hosts }}" 
