@@ -16,6 +16,7 @@ ENV: testing
 web_application: nginx-symfony
 web_server_role: webserver
 server_hosts: webserver
+local_server_group: "[webserver]"
 inventory_hosts: "/etc/ansible/inventory/hosts"
 php_mongo_enable: true
 php_version_enable: "5.6"

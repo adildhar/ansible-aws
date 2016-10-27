@@ -10,8 +10,10 @@ __nginx_user: "www-data"
 remote_www_dir: "/var/www/symfony"
 nginx_vhost_projectname: "symfony"
 nginx_vhost_projectwebroot: "/var/www/symfony/web"
-nginx_vhost_servername: "localhost"
+nginx_vhost_server_name: "localhost"
 nginx_fastcgi_ipport: "127.0.0.1:9000"
 nginx_fastcgi_index: "index.php"
 nginx_vhost_location: '~ \.php$'
-
+nginx_vhost_root:  "{{ nginx_vhost_projectwebroot }}"
+nginx_vhost_access_log: "/var/log/nginx/{{ nginx_vhost_projectname }}_access.log"
+nginx_vhost_error_log: "/var/log/nginx/{{ nginx_vhost_projectname }}_error.log"

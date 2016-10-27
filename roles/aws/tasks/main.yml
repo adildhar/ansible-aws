@@ -39,7 +39,7 @@
     module: lineinfile 
     dest: "{{ inventory_hosts }}" 
     regexp: "{{ item }}" 
-    insertafter: "[webserver]" 
+    insertafter: "{{ local_server_group }}" 
     line: "{{ item }}"
   with_items:
     - "{{ instance_private_ip_1 }}"

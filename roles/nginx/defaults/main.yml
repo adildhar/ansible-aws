@@ -46,18 +46,18 @@ nginx_extra_http_options: ""
 
 nginx_remove_default_vhost: true
 nginx_vhosts_filename: "vhosts.conf"
-nginx_vhosts: 
+nginx_vhosts: []
 # Example vhost below, showing all available options:
-  - listen: "80 default_server" # default: "80 default_server"
-    listen_ipv6:  "[::]:80 default_server ipv6only=on"
-    server_name: "{{ nginx_vhost_servername }}"
-    root: "{{ nginx_vhost_projectwebroot }}"
-    index: "index.html index.htm index.php" # default: "index.html index.htm"
+#  - listen: "80 default_server" # default: "80 default_server"
+#    listen_ipv6:  "[::]:80 default_server ipv6only=on"
+#    server_name: "{{ nginx_vhost_servername }}"
+#   root: "{{ nginx_vhost_projectwebroot }}"
+#    index: "index.html index.htm index.php" # default: "index.html index.htm"
 #
 #   # Properties that are only added if defined:
 #   error_page: ""
-    access_log: "/var/log/nginx/{{ nginx_vhost_projectname }}_access.log"
-    error_log: "/var/log/nginx/{{ nginx_vhost_projectname }}_error.log"
+#    access_log: "/var/log/nginx/{{ nginx_vhost_projectname }}_access.log"
+#    error_log: "/var/log/nginx/{{ nginx_vhost_projectname }}_error.log"
 #   extra_parameters: "" # Can be used to add extra config blocks (multiline).
 
 nginx_upstreams: []
