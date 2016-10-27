@@ -50,7 +50,7 @@ nginx_vhosts:
 # Example vhost below, showing all available options:
   - listen: "80 default_server" # default: "80 default_server"
     listen_ipv6:  "[::]:80 default_server ipv6only=on"
-    server_name: "{{ nginx_vhost_servername }}"
+#   server_name: "{{ nginx_vhost_server_name }}"
 #   root: "{{ nginx_vhost_projectwebroot }}"
 #    index: "index.html index.htm index.php" # default: "index.html index.htm"
 #
