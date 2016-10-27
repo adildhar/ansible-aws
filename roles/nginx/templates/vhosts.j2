@@ -2,15 +2,15 @@
 server {
     listen {{ nginx_vhost_listen | default('80 default_server') }};
 
-{% if vhost.listen_ipv6 is defined %}
+{% if nginx_vhost_listen_ipv6 is defined %}
     listen {{ nginx_vhost_listen_ipv6 }};
 {% endif %}
 
-{% if vhost.server_name is defined %}
+{% if nginx_vhost_server_name is defined %}
     server_name {{ nginx_vhost_server_name }};
 {% endif %}
 
-{% if vhost.root is defined %}
+{% if nginx_vhost_root is defined %}
     root {{ nginx_vhost_root }};
 {% endif %}
 
@@ -31,22 +31,22 @@ location / {
 {% endif %}
 
 
-{% if vhost.error_page is defined %}
+{% if  nginx_vhost_error_page is defined %}
     error_page {{ nginx_vhost_error_page }};
 {% endif %}
 
-{% if vhost.access_log is defined %}
+{% if nginx_vhost_access_log is defined %}
     access_log {{ nginx_vhost_access_log }};
 {% endif %}
-{% if vhost.error_log is defined %}
+{% if nginx_vhost_error_log is defined %}
     error_log {{ nginx_vhost_error_log }};
 {% endif %}
 
-{% if vhost.return is defined %}
+{% if nginx_vhost_return is defined %}
     return {{ nginx_vhost_return }};
 {% endif %}
 
-{% if vhost.extra_parameters is defined %}
+{% if nginx_vhost_extra_parameters is defined %}
     {{ nginx_vhost_extra_parameters|indent(4) }};
 {% endif %}
 }
