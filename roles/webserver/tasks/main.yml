@@ -1,6 +1,6 @@
 ---
 - name: Clone git repository
-  git: dest={{ symfony_web_dir }} repo=https://github.com/adildhar/symfony.git update=no
+  git: dest={{ symfony_web_dir }} repo=https://github.com/adildhar/symfony.git update=yes
   become: yes
   register: cloned
 
