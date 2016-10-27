@@ -7,7 +7,7 @@
 - name: Apply permissions to webroot
   become: yes
   become_user: root
-  file: path="{{ webroot }}"" state=directory mode=0755 recurse=yes owner="{{web_dir_user}}"  group="{{web_dir_user}}"
+  file: path="{{ webroot }}" state=directory mode=0755 recurse=yes owner="{{web_dir_user}}"  group="{{web_dir_user}}"
   when: cloned|changed
 
 - name: install composer
