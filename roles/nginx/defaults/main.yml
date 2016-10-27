@@ -46,7 +46,7 @@ nginx_extra_http_options: ""
 
 nginx_remove_default_vhost: true
 nginx_vhosts_filename: "vhosts.conf"
-nginx_vhosts: []
+nginx_vhosts: true
 # Example vhost below, showing all available options:
 #  - listen: "80 default_server" # default: "80 default_server"
 #    listen_ipv6:  "[::]:80 default_server ipv6only=on"
