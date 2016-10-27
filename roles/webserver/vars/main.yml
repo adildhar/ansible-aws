@@ -1,7 +1,7 @@
 ---
-webroot: "/var/www/symfony/web"
-web_dir: "/var/www/symfony"
-web_dir_user: www-data
+symfony_webroot: "/var/www/symfony/web"
+symfony_web_dir: "/var/www/symfony"
+symfony_web_user: www-data
 web_ami_id: ami-21d30f42
 web_ins_type: t2.micro
 web_key_name: tradetracker-keypair
