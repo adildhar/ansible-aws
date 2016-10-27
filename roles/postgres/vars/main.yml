@@ -12,6 +12,7 @@ local_server_group: "[dbserver]"
 web_application: postgres-cluster
 web_server_role: dbserver
 server_hosts: dbserver
+inventory_hosts: "/etc/ansible/inventory/hosts"
 # postgres configurations to be created
 postgresql_repmgr_user: repmgr
 postgresql_repmgr_user_pass: Repmgr_1234

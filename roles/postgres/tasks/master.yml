@@ -54,14 +54,3 @@
   become: yes
   stat: path= "{{ postgresql_conf_directory }}/conf.d/replregistered"
   register: statresult
-
-- name: PostgreSQl Master Configuration | Register repmgr
-  become: yes
-  become_user: "{{postgresql_admin_user}}"
-  command: "/usr/bin/repmgr -f {{ postgresql_conf_directory }}/repmgr.conf --verbose master register"
-  when:  statresult.stat.islnk is defined and statresult.stat.islnk == False
-
-- name: PostgreSQl Master Configuration |Registered replmgr
-  become: yes
-  file: path="{{ postgresql_conf_directory }}/conf.d/replregistered"
-  register: replmgr_registered  
