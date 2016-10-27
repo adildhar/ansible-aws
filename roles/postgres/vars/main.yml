@@ -1,12 +1,12 @@
 ---
-web_ami_id: ami-21d30f42
-web_ins_type: t2.micro
-web_key_name: tradetracker-keypair
-web_group_id: sg-202f3344
-web_vpc_id: vpc-cc4a81a8
-web_subnet_ida: subnet-63982015
-web_subnet_idb: subnet-272fa643
-web_region: ap-southeast-1
+web_ami_id: ami-xxxxxx
+web_ins_type: t2-micro
+web_key_name: xxxxxxxxxx
+web_group_id: sg-xxxxx
+web_vpc_id: vpc-xxxxx
+web_subnet_ida: subnet-xxxxx
+web_subnet_idb: subnet-xxxxx
+web_region: xxxxxxxx
 ENV: testing
 local_server_group: "[dbserver]"
 web_application: postgres-cluster
@@ -15,16 +15,16 @@ server_hosts: dbserver
 inventory_hosts: "/etc/ansible/inventory/hosts"
 # postgres configurations to be created
 postgresql_repmgr_user: repmgr
-postgresql_repmgr_user_pass: Repmgr_1234
+postgresql_repmgr_user_pass: xxxxx
 postgresql_repmgr_db: repmgr
 postgresql_port: 5432
-postgresql_project_user: symfony
-postgresql_project_pass: 'Symfony_1234'
-postgresql_project_db: symfony
+postgresql_project_user: xxxxxxx
+postgresql_project_pass: 'xxxxxx'
+postgresql_project_db: xxxxxxx
 postgresql_service_name: "postgresql"
 postgresql_bin_directory: /usr/bin
 postgresql_systl_kernel_shmmax: 236857600
-postgresql_master_server: ''
+postgresql_master_server: 'xxxxxx'
 
 
 # List of databases to be created
