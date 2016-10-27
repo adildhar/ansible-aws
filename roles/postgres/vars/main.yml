@@ -2,13 +2,16 @@
 web_ami_id: ami-21d30f42
 web_ins_type: t2.micro
 web_key_name: tradetracker-keypair
-web_group_id: sg-
+web_group_id: sg-202f3344
 web_vpc_id: vpc-cc4a81a8
 web_subnet_ida: subnet-63982015
 web_subnet_idb: subnet-272fa643
 web_region: ap-southeast-1
 ENV: testing
 local_server_group: "[dbserver]"
+web_application: postgres-cluster
+web_server_role: dbserver
+server_hosts: dbserver
 # postgres configurations to be created
 postgresql_repmgr_user: repmgr
 postgresql_repmgr_user_pass: Repmgr_1234
