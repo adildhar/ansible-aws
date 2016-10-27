@@ -1,0 +1,20 @@
+---
+- name: Set Postgres Master Server
+  set_fact: postgres_master={{ postgresql_master_server }}
+
+- name: Replicate Postgresql Master Server to all nodes
+  set_fact: postgres_master={{ hostvars[play_hosts[0]].postgres_master }}
+
+- debug: msg="The Postgresql master is {{ postgres_master }}."
+  run_once: yes
+
+- name: Update PostgreSql Master Server Status
+  set_fact: postgres_status="master"
+  when: postgres_master == inventory_hostname
+
+- name: Update Slaves Nodes with PostgreSql Master Server Status
+  set_fact: postgres_status="slave"
+  when: postgres_master != inventory_hostname
+
+
+- debug: msg="I am a PostgreSql {{ postgres_status }} server."

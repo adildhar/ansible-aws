@@ -1,0 +1,105 @@
+
+- name: PostgreSQL | Make sure the postgres data directory exists
+  file:
+    path: "{{postgresql_data_directory}}"
+    owner: "{{ postgresql_service_user }}"
+    group: "{{ postgresql_service_group }}"
+    state: directory
+    mode: 0700
+  register: pgdata_dir_exist
+
+- name: PostgreSQL | Ensure the locale for lc_collate and lc_ctype is generated | Debian
+  become: yes
+  locale_gen: name="{{ item }}" state=present
+  with_items:
+    - "{{ postgresql_locale }}"
+    - "{{ postgresql_ctype }}"
+
+- name: PostgreSQL | Reset the cluster - drop the existing one | Debian
+  shell: pg_dropcluster --stop {{ postgresql_version }} {{ postgresql_cluster_name }}
+  become: yes
+  become_user: "{{ postgresql_service_user }}"
+  when: postgresql_cluster_reset and pgdata_dir_exist.changed
+
+- name: PostgreSQL | Reset the cluster - create a new one (with specified encoding and locale) | Debian
+  shell: >
+    pg_createcluster --start --locale {{ postgresql_locale }}
+    -e {{ postgresql_encoding }} -d {{ postgresql_data_directory }}
+    {{ postgresql_version }} {{ postgresql_cluster_name }}
+  become: yes
+  become_user: "{{ postgresql_service_user }}"
+  when: postgresql_cluster_reset and pgdata_dir_exist.changed
+
+
+- name: PostgreSQL | Ensure configuration directory exists
+  become: yes
+  file:
+    path: "{{ postgresql_conf_directory }}"
+    owner: "{{ postgresql_service_user }}"
+    group: "{{ postgresql_service_group }}"
+    mode: 0750
+    state: directory
+
+- name: Set Kernel shared memory for postgres
+  become: yes
+  sysctl: name=kernel.shmmax value="{{ postgresql_systl_kernel_shmmax }}" sysctl_file=/etc/sysctl.conf sysctl_set=yes reload=yes
+
+- name: PostgreSQL | Update configuration -(pg_hba.conf)
+  become: yes
+  template:
+    src: pg_hba.conf.j2
+    dest: "{{postgresql_conf_directory}}/pg_hba.conf"
+    owner: "{{ postgresql_service_user }}"
+    group: "{{ postgresql_service_group }}"
+    mode: 0640
+  register: postgresql_configuration_hba
+
+- name: PostgreSQL | Update configuration -(postgresql.conf) 
+  become: yes
+  template: 
+    src: "postgresql.conf-{{ postgresql_version }}.j2" 
+    dest: "{{postgresql_conf_directory}}/postgresql.conf" 
+    owner: "{{ postgresql_service_user }}" 
+    group: "{{ postgresql_service_group }}" 
+    mode: 0640 
+  register: postgresql_configuration
+
+- name: PostgreSQL | Update Repmgr configuration -(repmgr.conf) 
+  become: yes
+  template: 
+    src: "repmgr.conf.j2" 
+    dest: "{{postgresql_conf_directory}}/repmgr.conf" 
+    owner: "{{ postgresql_service_user }}" 
+    group: "{{ postgresql_service_group }}" 
+    mode: 0640 
+  register: repmgr_configuration
+
+- name: PostgreSQL | Create folder for additional configuration files
+  become: yes
+  file:
+    name: "{{postgresql_conf_directory}}/conf.d"
+    state: directory
+    owner: "{{ postgresql_service_user }}"
+    group: "{{ postgresql_service_group }}"
+    mode: 0755
+
+
+- name: PostgreSQL | Ensure the pid directory for PostgreSQL exists
+  file:
+    name: "{{ postgresql_pid_directory }}"
+    state: directory
+    owner: "{{ postgresql_service_user }}"
+    group: "{{ postgresql_service_group }}"
+    mode: u=rwX,g=rwXs,o=rx
+
+- name: PostgreSQL | Enable service
+  service:
+    name: "{{ postgresql_service_name }}"
+    enabled: yes
+  when: postgresql_service_enabled | bool
+
+- name: PostgreSQL | Restart PostgreSQL
+  become: yes
+  service:
+    name: "{{ postgresql_service_name }}"
+    state: restarted

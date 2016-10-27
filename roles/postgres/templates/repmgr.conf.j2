@@ -1,0 +1,15 @@
+cluster='{{ postgresql_cluster_name }}'
+{% if postgres_status == "master" %}
+node=1
+{% else %}
+node=2
+{% endif %}
+node_name='{{ ansible_eth1.ipv4.address }}'
+conninfo='host='{{ ansible_eth1.ipv4.address }}' user='{{ postgresql_repmgr_user }}' dbname='{{ postgresql_repmgr_db }}''
+pg_bindir='{{ postgresql_bin_directory }}'
+master_response_timeout=5
+reconnect_attempts=2
+reconnect_interval=2
+failover=manual
+promote_command='/usr/bin/repmgr standby promote -f {{postgresql_conf_directory}}/repmgr.conf'
+follow_command='/usr/bin/repmgr standby follow -f {{postgresql_conf_directory}}/repmgr.conf'

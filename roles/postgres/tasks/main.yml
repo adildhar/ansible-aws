@@ -1,0 +1,16 @@
+---
+- include: install.yml
+  when: ansible_pkg_mgr == "apt"
+  tags: [postgresql, postgresql-install]
+
+- include: get_server_status.yml
+
+- include: configure.yml
+  tags: [postgresql, postgresql-configure]
+
+
+- include: master.yml
+  when: postgres_status == "master"
+
+- include: slave.yml
+  when: postgres_status == "slave"

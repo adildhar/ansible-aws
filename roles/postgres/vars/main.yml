@@ -1,0 +1,58 @@
+---
+web_ami_id: ami-21d30f42
+web_ins_type: t2.micro
+web_key_name: tradetracker-keypair
+web_group_id: sg-
+web_vpc_id: vpc-cc4a81a8
+web_subnet_ida: subnet-63982015
+web_subnet_idb: subnet-272fa643
+web_region: ap-southeast-1
+ENV: testing
+local_server_group: "[dbserver]"
+# postgres configurations to be created
+postgresql_repmgr_user: repmgr
+postgresql_repmgr_user_pass: Repmgr_1234
+postgresql_repmgr_db: repmgr
+postgresql_port: 5432
+postgresql_project_user: symfony
+postgresql_project_pass: 'Symfony_1234'
+postgresql_project_db: symfony
+postgresql_service_name: "postgresql"
+postgresql_bin_directory: /usr/bin
+postgresql_systl_kernel_shmmax: 236857600
+postgresql_master_server: ''
+
+
+# List of databases to be created
+postgresql_databases:
+  - name: '{{ postgresql_project_db }}'
+    owner: '{{ postgresql_project_user }}'
+
+postgresql_users:
+  - name: '{{ postgresql_project_user }}'
+    pass: '{{ postgresql_project_pass }}'
+    encrypted: no       
+
+# List of databases with extensions to be created
+postgresql_database_extensions: []
+
+# List of user privileges to be applied (optional)
+postgresql_user_privileges:
+  - name: '{{ postgresql_project_user }}'                   
+    db: '{{ postgresql_project_db }}'                 
+    priv: "ALL"                 # privilege string format: example: INSERT,UPDATE/table:SELECT/anothertable:ALL
+    role_attr_flags: "CREATEDB" # role attribute flags
+    when: postgresql_project_user
+
+postgresql_pg_hba_custom:
+  - { type: host, database: all, user: all, address: '{{ ansible_eth1.ipv4.address }}/32', method: '{{ postgresql_default_auth_method }}', comment: 'Master Slave configuration' }
+  - { type: host, database: repmgr, user: repmgr, address: '{{ ansible_eth1.ipv4.address }}/32', method: '{{ postgresql_default_auth_method }}', comment: 'repmgr configuration' }
+  - { type: host, database: repmgr, user: replication, address: '{{ ansible_eth1.ipv4.address }}/32', method: '{{ postgresql_default_auth_method }}', comment: 'repmgr configuration' }
+
+
+sys_packages:
+  - mcrypt
+  - vim
+  - htop
+
+

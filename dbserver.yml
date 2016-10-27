@@ -1,0 +1,14 @@
+---
+- name: Create webservers with Nginx, PHP, Composer and Symfony
+  hosts: localhost
+  connection: local
+  gather_facts: False
+  vars_files:
+    - roles/dbserver/vars/main.yml
+  roles:
+    - aws
+
+#- hosts: dbserver
+#  roles:
+#    - { role: ssh_setup, ssh_user: postgres }
+#    - { role: postgres }

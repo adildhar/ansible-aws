@@ -1,0 +1,39 @@
+---
+- name:  PostgreSQL Slave configuration | Stop PostgreSQL Service
+  become: yes
+  service:
+    name: "{{ postgresql_service_name }}"
+    state: stopped
+
+- name: PostgreSQl Slave Configuration | Check repmgr exists
+  become: yes
+  stat: path="/var/run/postgresql/replregistered"
+  tags: replmgr
+  register: statslv
+
+- name: PostgreSQl Slave Configuration | repmgr Clone
+  become: yes
+  become_user: "{{postgresql_admin_user}}"
+  command: "/usr/bin/repmgr -f {{ postgresql_conf_directory }}/repmgr.conf -D {{ postgresql_data_directory }} -d {{ postgresql_repmgr_db }} -p {{ postgresql_port }} -U {{ postgresql_repmgr_user }} -R {{ postgresql_admin_user }} --verbose standby clone {{ postgresql_master_server }}"
+  tags: replmgr
+  when:  statslv.stat.islnk is not defined
+
+- name:  PostgreSQL Slave configuration | Start PostgreSQL Service
+  become: yes
+  service:
+    name: "{{ postgresql_service_name }}"
+    state: started
+
+- name: PostgreSQl Slave Configuration | repmgr Register
+  become: yes
+  become_user: "{{postgresql_admin_user}}"
+  command: "/usr/bin/repmgr -f {{ postgresql_conf_directory }}/repmgr.conf --verbose standby register"
+  when:  statslv.stat.islnk is not defined
+
+
+- name: PostgreSQl Slave Configuration |Registered replmgr
+  become: yes
+  file: path="/var/run/postgresql/replregistered"
+  register: replmgr_registered 
+  tags: replmgr
+  when:  statslv.stat.islnk is not defined 
