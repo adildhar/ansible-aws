@@ -28,5 +28,6 @@ sys_packages:
   - mcrypt
   - vim
   - htop
+  - awscli
 
 
